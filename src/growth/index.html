@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poultry Management - Growth</title>
+  <link rel="stylesheet" href="../public/style/style.css">
+  <link rel="icon" type="icon" href="../images/poultry-fav.png">
+  <script type="module" src="../js/dashBoard.mjs" defer></script>
+  <script type="module" src="../js/growthModule.mjs" defer></script>
+  <script type="module" src="../js/feedModule.mjs" defer></script>
+  <script type="module" src="../js/main.js" defer></script>
+    <script type="module" src="../js/growth.js" defer></script>  
+</head>
+<body>
+  <div id="sidebarContainer"></div>
+  <div class="content">
+    <div id="headerContainer"></div>
+    <main>
+      <div>
+        <form id="trackGrowthForm">
+          <input type="number" id="count" placeholder="Chicken Count" required>
+          <input type="number" id="weight" placeholder="Avg Weight (kg)" required>
+          <button type="submit">Track Growth</button>
+        </form>
+        <div id="growthData">Growth data will appear here.</div>
+      </div>
+      <p id="debug">Loading...</p>
+    </main>
+    <div id="footerContainer"></div>
+  </div>
+  
+</body>
+</html>
