@@ -8,32 +8,29 @@ import { collectFormData, saveFormData, displaySavedData } from './addData.js';
 // Load partials
 async function loadPartials() {
   try {
-    const basePath = window.location.pathname.startsWith('/growth') ? '../' : '';
+    const partialsBase = '/partials';  // assumes public/partials/ — change to '/src/partials' if you keep them in src
+
     const [sidebarHtml, headerHtml, footerHtml] = await Promise.all([
-      fetch(`${basePath}/partials/sidebar.html`).then(res => {
-        if (!res.ok) throw new Error(`Sidebar fetch failed: ${res.status}`);
-        return res.text();
-      }),
-      fetch(`${basePath}/partials/header.html`).then(res => {
-        if (!res.ok) throw new Error(`Header fetch failed: ${res.status}`);
-        return res.text();
-      }),
-      fetch(`${basePath}/partials/footer.html`).then(res => {
-        if (!res.ok) throw new Error(`Footer fetch failed: ${res.status}`);
-        return res.text();
-      })
+      fetch(`${partialsBase}/sidebar.html`),
+      fetch(`${partialsBase}/header.html`),
+      fetch(`${partialsBase}/footer.html`)
     ]);
-    document.getElementById('sidebarContainer').innerHTML = sidebarHtml;
-    document.getElementById('headerContainer').innerHTML = headerHtml;
-    document.getElementById('footerContainer').innerHTML = footerHtml;
-    console.log('Partials loaded successfully at 10:19 PM WAT on October 15, 2025');
+
+    if (!sidebarHtml.ok || !headerHtml.ok || !footerHtml.ok) {
+      throw new Error('One or more partials failed to load');
+    }
+
+    document.getElementById('sidebarContainer').innerHTML = await sidebarHtml.text();
+    document.getElementById('headerContainer').innerHTML = await headerHtml.text();
+    document.getElementById('footerContainer').innerHTML = await footerHtml.text();
+
+    console.log('All partials loaded successfully');
     initializeUI();
   } catch (error) {
-    console.error('Failed to load partials:', error.message);
+    console.error('Partials load error:', error.message);
     document.getElementById('sidebarContainer').innerHTML = '<div class="sidebar">Sidebar loading failed</div>';
     document.getElementById('headerContainer').innerHTML = '<header>Header loading failed</header>';
     document.getElementById('footerContainer').innerHTML = '<footer>Footer loading failed</footer>';
-    console.log('Fetch URLs attempted:', ['/partials/sidebar.html', '/partials/header.html', '/partials/footer.html'].map(url => new URL(url, import.meta.url).href));
   }
 }
 
@@ -101,7 +98,7 @@ if (form) {
 });
 
 // User Auth
-async function updateAuthUI() {
+export async function updateAuthUI() {
   const loginLink = document.getElementById('loginLink');
   const signupLink = document.getElementById('signupLink');
   const logoutLink = document.getElementById('logoutLink');
@@ -117,5 +114,3 @@ async function updateAuthUI() {
     if (logoutLink) logoutLink.style.display = 'none';
   }
 }
-
-export { updateAuthUI };
