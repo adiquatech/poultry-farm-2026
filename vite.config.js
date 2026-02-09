@@ -9,7 +9,7 @@ export default defineConfig({
     outDir: 'dist', 
     rollupOptions: {
       input: {
-        index: resolve(__dirname, '/src/index.html'),
+        index: resolve(__dirname, 'index.html'),
         growth: resolve(__dirname, '/src/growth/index.html'),
         signin: resolve(__dirname, '/src/auth/signin.html'),
         signup: resolve(__dirname, '/src/auth/signup.html'),
@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   server: {
-    open: '/src/index.html',
+    open: 'index.html',
   }
 
 });
