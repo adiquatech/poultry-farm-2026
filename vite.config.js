@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   root: '.', 
   publicDir: 'public', 
-  base: '/',
+  base: '/poultry-farm-2026/',
   build: {
     outDir: 'dist', 
     rollupOptions: {
