@@ -233,6 +233,22 @@ form#signinForm button, form#signupForm button {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+ #auth0-login-btn{
+  padding: 1rem 2.5rem; 
+  font-size: 1.2rem; 
+  background: #4CAF50; 
+  color: white; 
+  border: none; 
+  border-radius: 6px; 
+  cursor: pointer; 
+  margin: 2rem 0;
+ }
+ #login-message{
+  color: #666; 
+  font-size: 0.95rem; 
+  min-height: 1.2rem;
+ }
+
 form#signinForm button:hover, form#signupForm button:hover {
   background-color: var(--accent-color);
 }

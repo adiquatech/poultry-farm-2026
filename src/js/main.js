@@ -2,7 +2,7 @@
 import { initializeUI } from './dashBoard.mjs';
 import { feedModule } from './feedModule.mjs';
 import { growthModule } from './growthModule.mjs';
-import { isAuthenticated, getUser, handleAuthCallback } from './auth.js';
+import { isAuthenticated, getUser, handleAuthCallback, logout } from './auth.js';
 import { collectFormData, saveFormData, displaySavedData } from './addData.js';
 
 // Load partials
@@ -102,15 +102,34 @@ export async function updateAuthUI() {
   const loginLink = document.getElementById('loginLink');
   const signupLink = document.getElementById('signupLink');
   const logoutLink = document.getElementById('logoutLink');
+
   if (await isAuthenticated()) {
     const user = await getUser();
-    document.querySelector('header h1').textContent = `Welcome, ${user.name}!`;
+    // Update welcome message in header
+    const headerTitle = document.querySelector('header h1');
+    if (headerTitle) headerTitle.textContent = `Welcome, ${user?.name || 'Farmer'}!`;
+
+    // Show logout, hide login/signup
     if (loginLink) loginLink.style.display = 'none';
     if (signupLink) signupLink.style.display = 'none';
     if (logoutLink) logoutLink.style.display = 'block';
   } else {
+    // Show login/signup, hide logout
     if (loginLink) loginLink.style.display = 'block';
     if (signupLink) signupLink.style.display = 'block';
     if (logoutLink) logoutLink.style.display = 'none';
+
+    // Reset welcome message
+    const headerTitle = document.querySelector('header h1');
+    if (headerTitle) headerTitle.textContent = 'Welcome, Farmer!';
   }
 }
+
+// Logout and redirect
+export async function logoutAndRedirect() {
+  await logout();
+  updateAuthUI();
+  window.location.href = '/';
+}
+
+window.logoutAndRedirect = logoutAndRedirect;

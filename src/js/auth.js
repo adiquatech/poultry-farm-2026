@@ -40,6 +40,8 @@ export async function logout() {
       returnTo: window.location.origin
     }
   });
+  localStorage.removeItem('user');
+  console.log('User logged out');
 }
 
 // Check if user is authenticated
